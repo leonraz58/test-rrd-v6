@@ -1,20 +1,27 @@
 import React, {useEffect} from 'react';
 import './App.css';
-import {NavLink, Routes, Route, Outlet, useParams, useNavigate, Navigate} from "react-router-dom";
+import {NavLink, Routes, Route, Outlet, useParams, useNavigate, Navigate, useSearchParams} from "react-router-dom";
 
 const Profile = () => {
-    const navigate = useNavigate()
+    const [searchParams, setSearchParams] = useSearchParams()
 
-    // useEffect(()=>{
-    //     if (true) navigate('/login')
-    // })
+    console.log(searchParams.get('name'))
+    console.log(Object.fromEntries(searchParams))
+
+    useEffect(() => {
+        console.log('research...')
+    }, [searchParams])
 
     return (
         <div>
-            {/*true && <Navigate to='/login'/> чтобы не происходило первой отрисовки, юзаем тернарник*/}
             profile
-            <button onClick={()=>{navigate('/login')}}>logout</button>
-            <button onClick={()=>{navigate(-1)}}>back</button>
+            <button onClick={()=>{
+                setSearchParams({...Object.fromEntries(searchParams), age: '32'})
+                //setSearchParams({age: '32'}) тут предыдущее значение будет затираться
+            }}>
+                add age
+            </button>
+
         </div>
     )
 }
